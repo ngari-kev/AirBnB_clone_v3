@@ -8,19 +8,21 @@ from models import storage
 
 @app_views.route('/amenities')
 def list_amenities():
-        """Retrieves a list of all amenity objects."""
-        amenity_list = [amenity.to_dict() for amenity in storage.all("Amenity").values()]
+    """Retrieves a list of all amenity objects."""
+    amenity_list = [amenity.to_dict() for amenity in
+                    storage.all("Amenity").values()]
 
-        response = make_response(jsonify(amenity_list))
-        response.headers["Content-Type"] = "application/json"
-        return response
+    response = make_response(jsonify(amenity_list))
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 
 @app_views.route('/amenities/<amenity_id>')
 def retrieve_amenity(amenity_id):
     """Retrieves a specific amenity object by its ID."""
     amenities = storage.all("Amenity").values()
-    amenity_data = [amenity.to_dict() for amenity in amenities if amenity.id == amenity_id]
+    amenity_data = [amenity.to_dict() for amenity in amenities
+                    if amenity.id == amenity_id]
 
     if not amenity_data:
         abort(404)
@@ -47,7 +49,7 @@ def remove_amenity(amenity_id):
 @app_views.route('/amenities', methods=['POST'])
 def create_amenity():
     """Creates a new amenity object."""
-    
+
     request_data = request.get_json()
     if not request_data:
         abort(400, "Not a JSON")
@@ -66,11 +68,11 @@ def create_amenity():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
-
 def modify_amenity(amenity_id):
     """Updates an existing amenity object by its ID."""
     amenities = storage.all("Amenity").values()
-    amenity_data = [amenity.to_dict() for amenity in amenities if amenity.id == amenity_id]
+    amenity_data = [amenity.to_dict() for amenity in amenities
+                    if amenity.id == amenity_id]
 
     if not amenity_data:
         abort(404)
@@ -87,4 +89,3 @@ def modify_amenity(amenity_id):
 
     response = make_response(jsonify(amenity_data[0]), 200)
     return response
-
