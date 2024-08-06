@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""Flask application"""
 from flask import Flask, make_response, jsonify
 from os import getenv
 from models import storage
