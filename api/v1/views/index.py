@@ -23,12 +23,10 @@ def stats():
         'places': "Place",
         'reviews': "Review"
     }
-    counts = {}
 
-    
     for k, v in classes.items():
-        count = storage.count(v)
-        print("counting {}: {}".format(v, count))
-        counts[k] = count
-    counts = dict(sorted(counts.items()))
-    return jsonify(counts)
+        classes[k] = storage.count(v)
+
+    sorted_classes = dict(sorted(classes.items()))
+
+    return jsonify(sorted_classes)
