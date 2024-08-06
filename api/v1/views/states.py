@@ -45,11 +45,11 @@ def post():
         abort(400, 'Not a JSON')
     if 'name' not in req_data:
         abort(400, 'Missing name')
-    
+
     new_state = State(name=req_data['name'])
     storage.new(new_state)
     storage.save()
-    
+
     return make_response(jsonify(new_state.to_dict()), 201)
 
 
@@ -57,25 +57,25 @@ def post():
 def put(state_id):
     """Perform a PUT operation on State."""
     states = storage.all("State").values()
-    
+
     state_obj = None
     for obj in states:
         if obj.id == state_id:
             state_obj = obj
             break
-    
+
     if not state_obj:
         abort(404, 'State not found')
-    
+
     req_data = request.get_json()
     if not req_data:
         abort(400, 'Not a JSON')
-    
+
     if 'name' in req_data:
         state_obj.name = req_data['name']
     else:
         abort(400, 'Missing name')
-    
+
     storage.save()
-    
+
     return jsonify(state_obj.to_dict()), 200
